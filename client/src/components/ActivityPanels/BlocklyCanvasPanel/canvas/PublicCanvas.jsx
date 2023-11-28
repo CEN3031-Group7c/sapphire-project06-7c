@@ -6,23 +6,32 @@ import { message, Spin, Row, Col, Alert, Menu, Dropdown } from 'antd';
 import CodeModal from '../modals/CodeModal';
 import ConsoleModal from '../modals/ConsoleModal';
 import PlotterModal from '../modals/PlotterModal';
+import UploadModal from '../modals/UploadModal';
+
 import {
   connectToPort,
   handleCloseConnection,
   handleOpenConnection,
 } from '../../Utils/consoleHelpers';
+
 import ArduinoLogo from '../Icons/ArduinoLogo';
 import PlotterLogo from '../Icons/PlotterLogo';
 
 let plotId = 1;
 
 export default function PublicCanvas({ activity, isSandbox }) {
+  const fileInputRef = useRef(null);
+
   const [hoverUndo, setHoverUndo] = useState(false);
   const [hoverRedo, setHoverRedo] = useState(false);
   const [hoverCompile, setHoverCompile] = useState(false);
   const [hoverConsole, setHoverConsole] = useState(false);
+  const [hoverUpload, setHoverUpload] = useState(false);
+
   const [showConsole, setShowConsole] = useState(false);
   const [showPlotter, setShowPlotter] = useState(false);
+  const [showUpload, setShowUpload] = useState(false);
+
   const [plotData, setPlotData] = useState([]);
   const [connectionOpen, setConnectionOpen] = useState(false);
   const [selectedCompile, setSelectedCompile] = useState(false);
@@ -48,6 +57,7 @@ export default function PublicCanvas({ activity, isSandbox }) {
     };
     setUp();
   }, [activity]);
+
 
   const handleUndo = () => {
     if (workspaceRef.current.undoStack_.length > 0)
@@ -86,11 +96,35 @@ export default function PublicCanvas({ activity, isSandbox }) {
     }
   };
 
+
+  const handleUpload = () => {
+    if (showConsole || showPlotter) {
+      return;
+    }
+
+    fileInputRef.current.click();
+  }
+
+  const handleFileUpload = (file) => {
+    if (file) {
+      alert(`File selected: ${file.name}`);
+  
+      const reader = new FileReader();
+      reader.onload = async(e) => {
+        const xmlContent = e.target.result;
+        alert(xmlContent);
+      };
+      reader.readAsText(file);
+    }
+  };  
+
+
   const handlePlotter = async () => {
     if (showConsole) {
       message.warning('Close serial monitor before openning serial plotter');
       return;
     }
+
 
     if (!showPlotter) {
       await handleOpenConnection(
@@ -117,6 +151,7 @@ export default function PublicCanvas({ activity, isSandbox }) {
     }
   };
 
+
   const handleCompile = async () => {
     if (showConsole || showPlotter) {
       message.warning(
@@ -141,6 +176,7 @@ export default function PublicCanvas({ activity, isSandbox }) {
     }
   };
 
+
   const menu = (
     <Menu>
       <Menu.Item onClick={handlePlotter}>
@@ -151,8 +187,12 @@ export default function PublicCanvas({ activity, isSandbox }) {
       <Menu.Item>
         <CodeModal title={'Arduino Code'} workspaceRef={workspaceRef.current} />
       </Menu.Item>
+      <Menu.Item>
+        <UploadModal title={'Upload'} workspaceRef={workspaceRef.current} onFileUpload={handleFileUpload} />
+      </Menu.Item>
     </Menu>
-  );
+  );  
+
 
   return (
     <div id='horizontal-container' className='flex flex-column'>
@@ -161,6 +201,16 @@ export default function PublicCanvas({ activity, isSandbox }) {
           id='bottom-container'
           className='flex flex-column vertical-container overflow-visible'
         >
+
+          <div id='upload code' style={{ display: 'none' }}>
+          <input
+            type="file"
+            ref={fileInputRef}
+            style={{ display: 'none' }}
+            onChange={(e) => handleFileUpload(e.target.files[0])}
+          />
+        </div>
+
           <Spin
             tip='Compiling Code Please Wait... It may take up to 20 seconds to compile your code.'
             className='compilePop'
@@ -248,7 +298,6 @@ export default function PublicCanvas({ activity, isSandbox }) {
                           Upload to Arduino
                         </div>
                       )}
-
                       <i
                         onClick={() => handleConsole()}
                         className='fas fa-terminal hvr-info'
@@ -261,6 +310,20 @@ export default function PublicCanvas({ activity, isSandbox }) {
                           Show Serial Monitor
                         </div>
                       )}
+
+                      <i
+                        onClick={() => handleUpload()}
+                        className='fas fa-upload hvr-info'
+                        style={{ marginLeft: '6px' }}
+                        onMouseEnter={() => setHoverUpload(true)}
+                        onMouseLeave={() => setHoverUpload(false)}
+                      />
+                      {hoverUpload && (
+                        <div className='popup ModalCompile'>
+                          Upload Custom Block
+                        </div>
+                      )}
+
                       <Dropdown overlay={menu}>
                         <i className='fas fa-ellipsis-v'></i>
                       </Dropdown>
@@ -285,7 +348,15 @@ export default function PublicCanvas({ activity, isSandbox }) {
           setPlotData={setPlotData}
           plotId={plotId}
         />
+
+        <UploadModal
+        title={'Upload'}
+        workspaceRef={workspaceRef.current}
+        onFileUpload={handleFileUpload}
+      />
+
       </div>
+
 
       {/* This xml is for the blocks' menu we will provide. Here are examples on how to include categories and subcategories */}
       <xml id='toolbox' is='Blockly workspace'>
@@ -312,6 +383,7 @@ export default function PublicCanvas({ activity, isSandbox }) {
             ))
         }
       </xml>
+
 
       {compileError && (
         <Alert

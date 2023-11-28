@@ -9,6 +9,8 @@ import PlotterModal from '../modals/PlotterModal';
 
 import SaveLogo from '../Icons/SaveLogo'
 import LinkLogo from '../Icons/LinkLogo';
+import axios from 'axios';
+
 
 let plotId = 1;
 
@@ -56,8 +58,8 @@ export default function CustomBlockCanvas({ activity, isSandbox }) {
   };
 
   const handleSave = async () => {
-    // TODO: handle upload to gallery here
-    alert('TODO: handle upload to gallery here');
+    // TODO: handle save here
+    alert('TODO: handle upload here');
   };
 
   const menu = (
