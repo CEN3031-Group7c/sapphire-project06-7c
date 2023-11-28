@@ -672,3 +672,20 @@ export const getClassroomWorkspace = async (id) =>
     auth: true,
     error: 'Unable to retrive classroom workspaces',
   });
+
+
+  export const createBlock = async(
+    blockJson,
+    name,
+    blockCategory
+    ) =>
+    makeRequest ({
+      method: POST,
+      path: `${server}/blocks`,
+      data: {
+        description: blockJson,
+        name,
+        blockCategory
+      },
+      error: 'Unable to create new block',
+    });
