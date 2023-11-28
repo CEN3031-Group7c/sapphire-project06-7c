@@ -5,6 +5,8 @@ import { message, Spin, Row, Col, Alert, Menu, Dropdown } from 'antd';
 import CodeModal from '../modals/CodeModal';
 import LinkLogo from '../Icons/LinkLogo';
 import { getXml } from '../../Utils/helpers';
+import axios from 'axios';
+
 
 let plotId = 1;
 
