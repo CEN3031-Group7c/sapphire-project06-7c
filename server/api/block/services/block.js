@@ -2,6 +2,7 @@
 
 const sortCategory = (toolbox) => {
   const order = [
+    'Custom',
     'Logic',
     'Control',
     'Math',

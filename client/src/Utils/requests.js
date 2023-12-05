@@ -408,6 +408,20 @@ export const createUnit = async (number, name, standardsID, standardsDescrip, gr
     error: 'Fail to create new unit.',
   });
 
+export const createBlock = async(name, description, blocks_category, image_url) =>
+  makeRequest({
+    method: POST,
+    path: `${server}/blocks`,
+    data: {
+      name: name,
+      description: description,
+      blocks_category: blocks_category,
+      image_url: image_url,
+    },
+    auth: true,
+    error: 'Unable to create new block',
+  });
+
 export const updateUnit = async (
   id,
   number,

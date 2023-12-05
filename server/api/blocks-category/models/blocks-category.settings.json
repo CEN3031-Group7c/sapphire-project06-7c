@@ -3,11 +3,13 @@
   "connection": "default",
   "collectionName": "blocks_categories",
   "info": {
-    "name": "Blocks Category"
+    "name": "Blocks Category",
+    "description": ""
   },
   "options": {
     "increments": true,
-    "timestamps": true
+    "timestamps": true,
+    "draftAndPublish": false
   },
   "attributes": {
     "name": {

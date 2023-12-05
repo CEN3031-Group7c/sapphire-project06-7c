@@ -31,6 +31,7 @@ export default function PublicCanvas({ activity, isSandbox }) {
   const [forceUpdate] = useReducer((x) => x + 1, 0);
   const workspaceRef = useRef(null);
   const activityRef = useRef(null);
+  const { Blockly } = window;
 
   const setWorkspace = () => {
     workspaceRef.current = window.Blockly.inject('blockly-canvas', {
@@ -150,6 +151,9 @@ export default function PublicCanvas({ activity, isSandbox }) {
       <CodeModal title={'XML'} workspaceRef={workspaceRef.current} />
       <Menu.Item>
         <CodeModal title={'Arduino Code'} workspaceRef={workspaceRef.current} />
+      </Menu.Item>
+      <Menu.Item>
+        <CodeModal title={'Import'} workspaceRef={workspaceRef.current} />
       </Menu.Item>
     </Menu>
   );
@@ -286,7 +290,7 @@ export default function PublicCanvas({ activity, isSandbox }) {
           plotId={plotId}
         />
       </div>
-
+      
       {/* This xml is for the blocks' menu we will provide. Here are examples on how to include categories and subcategories */}
       <xml id='toolbox' is='Blockly workspace'>
         {
@@ -312,6 +316,7 @@ export default function PublicCanvas({ activity, isSandbox }) {
             ))
         }
       </xml>
+      
 
       {compileError && (
         <Alert
