@@ -58,7 +58,7 @@ export default function CustomBlockCanvas({ activity, prevWorkspace, isSandbox }
     if (workspaceRef.current.redoStack_.length > 0)
       workspaceRef.current.undo(true);
   };
-
+  
   const handleSave = async () => {
     // TODO: handle save here
     alert('TODO: handle upload here');

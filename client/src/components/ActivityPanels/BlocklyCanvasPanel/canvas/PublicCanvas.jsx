@@ -314,7 +314,11 @@ export default function PublicCanvas({ activity, isSandbox }) {
     }
   };
 
-
+  /**
+   * Initiates the file upload process.
+   * If neither the console nor the plotter is active,
+   * triggers a click on the hidden file input to prompt the user to select a file.
+  **/
   const handleUpload = () => {
     if (showConsole || showPlotter) {
       return;
@@ -536,7 +540,15 @@ export default function PublicCanvas({ activity, isSandbox }) {
                         </div>
                       )}
 
+                      
                       <i
+                      /**
+                       * Upload button with interactive features:
+                       * *Click event triggers the handleUpload function.
+                       * *Mouse hover activates hover effect and updates state accordingly.
+                       * When hovered:
+                       * *Displays a popup with information about custom block upload.
+                      **/
                         onClick={() => handleUpload()}
                         className='fas fa-upload hvr-info'
                         style={{ marginLeft: '6px' }}
@@ -574,7 +586,14 @@ export default function PublicCanvas({ activity, isSandbox }) {
           plotId={plotId}
         />
 
+        
         <UploadModal
+        /**
+         * Upload modal component for handling file uploads.
+         * *title: Title of the modal, set to 'Upload'.
+         * *workspaceRef: Reference to the Blockly workspace.
+         * *onFileUpload: Callback function to handle file uploads.
+        **/
         title={'Upload'}
         workspaceRef={workspaceRef.current}
         onFileUpload={handleFileUpload}

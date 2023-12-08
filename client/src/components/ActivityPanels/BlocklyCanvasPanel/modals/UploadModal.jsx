@@ -1,6 +1,18 @@
+/**
+ * UploadModal Component:
+ * A reusable React component that presents a modal for uploading files. 
+ * It includes a file input, a 'Select File' button, and handles file selection events.
+ * The modal provides visual feedback, such as success and warning messages, and communicates
+ * with the parent component through props for title, workspace reference, and file upload callback.
+ *
+ * @component UploadModal
+ * @props {string} title - The title of the modal.
+ * @props {Object} workspaceRef - Reference to the Blockly workspace.
+ * @props {function} onFileUpload - Callback function to handle file uploads.
+ **/
+
 import { Modal, Button, Typography, message } from 'antd';
 import React, { useState, useRef } from 'react';
-import { getArduino, getXml } from '../../Utils/helpers';
 
 export default function UploadModal(props) {
   const [visible, setVisible] = useState(false);
@@ -55,7 +67,7 @@ export default function UploadModal(props) {
             <input
               type="file"
               ref={fileInputRef}
-              style={{ display: 'none' }}
+              style={{ display: 'block' }}
               onChange={handleFileChange}
             />
             <Button onClick={showFileInput}>Select File</Button>
