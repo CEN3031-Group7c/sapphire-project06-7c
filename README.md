@@ -147,9 +147,14 @@ Before submitting a pull request, rebase the feature branch into the target bran
 - 2
 - 3
 ### Running the project
+To run the project, simply follow the instructions listed at the top of the readme.
 
 ### Database Changes
 
 ### Outstanding work
+- Integration of two branches we have to fully resolve the import custom blocks from local files task
+- Resolve the authentication error when attempting to post custom blocks into database
 
 ### Built Upon
+- Existing CASMM architecture and components
+- MDNs blob API for local files
