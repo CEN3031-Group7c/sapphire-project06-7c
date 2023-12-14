@@ -143,13 +143,18 @@ Before submitting a pull request, rebase the feature branch into the target bran
 
 # Project Hand Off Information
 ### Project Features
-- 1
-- 2
-- 3
+- CASMM page to create custom blocks
+- Space to save custom blocks
+- Gallery upload tool
+- Import function intended for reading in XML files and importing custom blocks.
+- Importing custom blocks using XML text.
+- Save blocks to local files
+
 ### Running the project
 To run the project, simply follow the instructions listed at the top of the readme.
 
 ### Database Changes
+We added a schema for Custom blocks and added a Custom category to Blocks Category.
 
 ### Outstanding work
 - Integration of two branches we have to fully resolve the import custom blocks from local files task
